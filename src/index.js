@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { Client, IntentsBitField } = require("discord.js");
+const { Client, IntentsBitField, Integration } = require("discord.js");
 
 const client = new Client({
   intents: [
@@ -29,8 +29,11 @@ client.on("interactionCreate", (interaction) => {
     return;
   }
 
-  if (interaction.commandName === "hey") {
-    interaction.reply("hey!");
+  if (interaction.commandName === "add") {
+    const num1 = interaction.options.get("first-number").value;
+    const num2 = interaction.options.get("second-number").value;
+
+    interaction.reply(`The sum is ${num1 + num2}`);
   }
 
   console.log(">> Check | interaction:", interaction.commandName);
