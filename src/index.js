@@ -1,5 +1,6 @@
 require("dotenv").config();
 const { Client, IntentsBitField, ActivityType } = require("discord.js");
+const eventHandler = require("./handlers/eventHandler");
 
 const client = new Client({
   intents: [
@@ -10,29 +11,6 @@ const client = new Client({
   ],
 });
 
-let status = [
-  {
-    name: "Chainuocngot",
-    type: ActivityType.Streaming,
-    url: "https://www.youtube.com/watch?v=OqxHy8sCtvA",
-  },
-  {
-    name: "Test",
-    type: ActivityType.Listening,
-  },
-  {
-    name: "Trai",
-  },
-];
-
-client.on("ready", (c) => {
-  console.log(`✅ ${c.user.tag} is online.`);
-
-  setInterval(() => {
-    let random = Math.floor(Math.random() * status.length);
-
-    client.user.setActivity(status[random]);
-  }, 5_000);
-});
+eventHandler(client);
 
 client.login(process.env.TOKEN);
