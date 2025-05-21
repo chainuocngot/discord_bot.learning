@@ -6,19 +6,19 @@ const {
 } = require("discord.js");
 
 module.exports = {
-  name: "ban",
-  description: "Bans a member",
+  name: "kick",
+  description: "Kicks a member",
 
   options: [
     {
       name: "target-user",
-      description: "The user to ban",
+      description: "The user to kick",
       required: true,
       type: ApplicationCommandOptionType.Mentionable,
     },
     {
       name: "reason",
-      description: "The reason for banning",
+      description: "The reason you want to kick",
       type: ApplicationCommandOptionType.String,
     },
   ],
@@ -46,7 +46,7 @@ module.exports = {
 
     if (targetUser.id === interaction.guild.ownerId) {
       await interaction.editReply(
-        "You can't ban that user because they're the server owner",
+        "You can't kick that user because they're the server owner",
       );
       return;
     }
@@ -57,27 +57,27 @@ module.exports = {
 
     if (targetUserRolePosition >= requestUserRolePosition) {
       await interaction.editReply(
-        "You can't ban that user because they have the same/higher role than you",
+        "You can't kick that user because they have the same/higher role than you",
       );
       return;
     }
 
     if (targerUserRolePosition >= botRolePosition) {
       await interaction.editReply(
-        "I can't ban that user because they have the same/higher role than me",
+        "I can't kick that user because they have the same/higher role than me",
       );
       return;
     }
 
     try {
-      await targetUser.ban({
+      await targetUser.kick({
         reason,
       });
       await interaction.editReply(
-        `User ${targetUser} was banned\nReason: ${reason}`,
+        `User ${targetUser} was kicked\nReason: ${reason}`,
       );
     } catch (error) {
-      console.log(`There was an error when banning: ${error}`);
+      console.log(`There was an error when kicking: ${error}`);
     }
   },
 };
